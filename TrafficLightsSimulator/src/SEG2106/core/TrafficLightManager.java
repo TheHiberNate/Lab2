@@ -14,8 +14,6 @@ public class TrafficLightManager extends EventGenerator {
 
 	private TrafficLightUserInterface trafficLightUI;
 
-	private String trafficCondition;
-
 	private static final int TIMER_GREEN_PERIOD = 3000;
 	private static final int TIMER_YELLOW_PERIOD = 1000;
 	
@@ -53,7 +51,6 @@ public class TrafficLightManager extends EventGenerator {
 	
 	
 	public void setTrafficCondition(String trafficCondition){
-		this.trafficCondition = trafficCondition;
 		// Create and send an even regarding the traffic condition
 		if (trafficCondition.equalsIgnoreCase("lowTraffic")){
 			sendEvent(TRAFFIC_LOW_EVENT);
@@ -64,10 +61,6 @@ public class TrafficLightManager extends EventGenerator {
 		else if (trafficCondition.equalsIgnoreCase("highTraffic")){
 			sendEvent(TRAFFIC_HIGH_EVENT);
 		}
-	}
-
-	public String getTrafficCondition() {
-		return trafficCondition;
 	}
 
 
