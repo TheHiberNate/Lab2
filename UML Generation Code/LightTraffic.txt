@@ -1,0 +1,54 @@
+class TrafficLight
+{
+  status {
+    northGreenAndArrowHigh { 
+        entry / { trafficLightManager.northGreenAndArrow(); }
+        entry / { trafficLightManager.southRed(); }
+        entry / { trafficLightManager.westRed(); }
+        entry / { trafficLightManager.eastRed(); }
+      highTraffic() -> northYellowHigh;
+    }
+    northYellowHigh {
+        entry / { trafficLightManager.northYellow(); }
+        entry / { trafficLightManager.southRed(); }
+        entry / { trafficLightManager.westRed(); }
+        entry / { trafficLightManager.eastRed(); }
+      highTraffic() -> SouthGreenAndArrowHigh;
+    }
+      SouthGreenAndArrowHigh {
+        entry / { trafficLightManager.northRed(); }
+        entry / { trafficLightManager.southGreenAndArrow(); }
+        entry / { trafficLightManager.westRed(); }
+        entry / { trafficLightManager.eastRed(); }
+      highTraffic() -> southYellow;
+    }
+      southYellow{
+        entry / { trafficLightManager.northRed(); }
+        entry / { trafficLightManager.southYellow(); }
+        entry / { trafficLightManager.westRed(); }
+        entry / { trafficLightManager.eastRed(); }
+      highTraffic() -> westGreenAndArrowHigh;
+    }
+    westGreenAndArrowHigh{
+        entry / { trafficLightManager.northRed(); }
+        entry / { trafficLightManager.southRed(); }
+        entry / { trafficLightManager.westGreenAndArrow(); }
+        entry / { trafficLightManager.eastRed(); }
+      highTraffic() -> westAndEastGreenHigh;
+    }
+    westAndEastGreenHigh{
+        entry / { trafficLightManager.northRed(); }
+        entry / { trafficLightManager.southRed(); }
+        entry / { trafficLightManager.westGreen(); }
+        entry / { trafficLightManager.eastGreen(); }
+    highTraffic() -> westAndEastYellowHigh;
+    }
+    westAndEastYellowHigh{
+        entry / { trafficLightManager.northRed(); }
+        entry / { trafficLightManager.southRed(); }
+        entry / { trafficLightManager.westYellow(); }
+        entry / { trafficLightManager.eastYellow(); }
+    highTraffic() -> northGreenAndArrowHigh;
+    }
+  }
+}

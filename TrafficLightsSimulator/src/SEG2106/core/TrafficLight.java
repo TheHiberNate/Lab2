@@ -27,7 +27,14 @@ public class TrafficLight implements EventHandler {
 
     // lightTraffic
     northAndSouthGreenAndArrowLight, northAndSouthGreenLight, northAndSouthYellowLight,
-    northAndSouthRedLight, westAndEastYellowLight
+    northAndSouthRedLight, westAndEastYellowLight,
+
+    // moderateTraffic
+    northAndLeftArrowGreenMod, northYellowMod, northRedMod, southYellowMod, southRedMod, westAndEastYellowMod,
+
+    // highTraffic
+    northGreenAndArrowHigh, northYellowHigh, SouthGreenAndArrowHigh, southYellow, westGreenAndArrowHigh,
+    westAndEastGreenHigh, westAndEastYellowHigh
   }
 
   private Status status;
@@ -41,8 +48,16 @@ public class TrafficLight implements EventHandler {
   public TrafficLight(TrafficLightManager trafficLightManager, String trafficCondidtion) {
     this.trafficLightManager = trafficLightManager;
     this.trafficCondition = trafficCondidtion;
-    
-    setStatus(Status.northAndSouthGreenAndArrowLight); // set status to green light for north/south lights
+
+    if (trafficCondition.equals("lightTraffic")) {
+      setStatus(Status.northAndSouthGreenAndArrowLight); // set status to green light for north/south lights
+    } else if (trafficCondition.equals("moderateTraffic")) {
+      setStatus(Status.northAndLeftArrowGreenMod);
+    } else if (trafficCondition.equals("highTraffic")) {
+      setStatus(Status.northGreenAndArrowHigh);
+    } else {
+      setStatus(Status.northAndSouthGreen);
+    }
 
     trafficLightManager.addEventHandler(this);
   }
@@ -75,7 +90,14 @@ public class TrafficLight implements EventHandler {
         break;
       default:
         // Other states do respond to this event
-        lowTraffic();
+        if (this.trafficCondition.equals("lightTraffic")) {
+          lowTraffic();
+        } else if (this.trafficCondition.equals("moderateTraffic")) {
+          moderateTraffic();
+        } else if(this.trafficCondition.equals("highTraffic")){
+          highTraffic();
+        }
+
     }
 
     return wasEventProcessed;
@@ -96,7 +118,13 @@ public class TrafficLight implements EventHandler {
         break;
       default:
         // Other states do respond to this event
-        lowTraffic();
+        if (this.trafficCondition.equals("lightTraffic")) {
+          lowTraffic();
+        } else if (this.trafficCondition.equals("moderateTraffic")) {
+          moderateTraffic();
+        } else if(this.trafficCondition.equals("highTraffic")){
+          highTraffic();
+        }
     }
 
     return wasEventProcessed;
@@ -104,8 +132,39 @@ public class TrafficLight implements EventHandler {
 
   @Override
   public boolean moderateTraffic() {
-    // TODO Auto-generated method stub
-    return false;
+    boolean wasEventProcessed = false;
+
+    Status aStatus = status;
+    switch (aStatus) {
+      case northAndLeftArrowGreenMod:
+        setStatus(Status.northYellowMod);
+        wasEventProcessed = true;
+        break;
+      case northYellowMod:
+        setStatus(Status.northRedMod);
+        wasEventProcessed = true;
+        break;
+      case northRedMod:
+        setStatus(Status.southYellowMod);
+        wasEventProcessed = true;
+        break;
+      case southYellowMod:
+        setStatus(Status.southRedMod);
+        wasEventProcessed = true;
+        break;
+      case southRedMod:
+        setStatus(Status.westAndEastYellowMod);
+        wasEventProcessed = true;
+        break;
+      case westAndEastYellowMod:
+        setStatus(Status.northAndLeftArrowGreenMod);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
   }
 
   @Override
@@ -143,8 +202,43 @@ public class TrafficLight implements EventHandler {
 
   @Override
   public boolean highTraffic() {
-    // TODO Auto-generated method stub
-    return false;
+    boolean wasEventProcessed = false;
+
+    Status aStatus = status;
+    switch (aStatus) {
+      case northGreenAndArrowHigh:
+        setStatus(Status.northYellowHigh);
+        wasEventProcessed = true;
+        break;
+      case northYellowHigh:
+        setStatus(Status.SouthGreenAndArrowHigh);
+        wasEventProcessed = true;
+        break;
+      case SouthGreenAndArrowHigh:
+        setStatus(Status.southYellow);
+        wasEventProcessed = true;
+        break;
+      case southYellow:
+        setStatus(Status.westGreenAndArrowHigh);
+        wasEventProcessed = true;
+        break;
+      case westGreenAndArrowHigh:
+        setStatus(Status.westAndEastGreenHigh);
+        wasEventProcessed = true;
+        break;
+      case westAndEastGreenHigh:
+        setStatus(Status.westAndEastYellowHigh);
+        wasEventProcessed = true;
+        break;
+      case westAndEastYellowHigh:
+        setStatus(Status.northGreenAndArrowHigh);
+        wasEventProcessed = true;
+        break;
+      default:
+        // Other states do respond to this event
+    }
+
+    return wasEventProcessed;
   }
 
   private void setStatus(Status aStatus) {
@@ -194,7 +288,8 @@ public class TrafficLight implements EventHandler {
         trafficLightManager.eastYellow();
         break;
 
-      // light case  
+      // light
+      // case____________________________________________________________________
       case northAndSouthGreenAndArrowLight:
         trafficLightManager.northArrow();
         trafficLightManager.southArrow();
@@ -223,6 +318,142 @@ public class TrafficLight implements EventHandler {
         trafficLightManager.northRed();
         trafficLightManager.southRed();
         trafficLightManager.westYellow();
+        trafficLightManager.eastYellow();
+        break;
+
+      // Moderate traffic
+      // cases____________________________________________________________________
+      case northAndLeftArrowGreenMod:
+        // line 6 "model.ump"
+        trafficLightManager.northGreenAndArrow();
+        // line 7 "model.ump"
+        trafficLightManager.southRed();
+        // line 8 "model.ump"
+        trafficLightManager.westRed();
+        // line 9 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case northYellowMod:
+        // line 13 "model.ump"
+        trafficLightManager.northYellow();
+        // line 14 "model.ump"
+        trafficLightManager.southRed();
+        // line 15 "model.ump"
+        trafficLightManager.westRed();
+        // line 16 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case northRedMod:
+        // line 20 "model.ump"
+        trafficLightManager.northRed();
+        // line 21 "model.ump"
+        trafficLightManager.southGreenAndArrow();
+        // line 22 "model.ump"
+        trafficLightManager.westRed();
+        // line 23 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case southYellowMod:
+        // line 27 "model.ump"
+        trafficLightManager.northRed();
+        // line 28 "model.ump"
+        trafficLightManager.southYellow();
+        // line 29 "model.ump"
+        trafficLightManager.westRed();
+        // line 30 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case southRedMod:
+        // line 34 "model.ump"
+        trafficLightManager.northRed();
+        // line 35 "model.ump"
+        trafficLightManager.southRed();
+        // line 36 "model.ump"
+        trafficLightManager.westGreen();
+        // line 37 "model.ump"
+        trafficLightManager.eastGreen();
+        break;
+      case westAndEastYellowMod:
+        // line 41 "model.ump"
+        trafficLightManager.northRed();
+        // line 42 "model.ump"
+        trafficLightManager.southRed();
+        // line 43 "model.ump"
+        trafficLightManager.westYellow();
+        // line 44 "model.ump"
+        trafficLightManager.eastYellow();
+        break;
+
+      // High traffic
+      // cases____________________________________________________________________
+      case northGreenAndArrowHigh:
+        // line 6 "model.ump"
+        trafficLightManager.northGreenAndArrow();
+        // line 7 "model.ump"
+        trafficLightManager.southRed();
+        // line 8 "model.ump"
+        trafficLightManager.westRed();
+        // line 9 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case northYellowHigh:
+        // line 13 "model.ump"
+        trafficLightManager.northYellow();
+        // line 14 "model.ump"
+        trafficLightManager.southRed();
+        // line 15 "model.ump"
+        trafficLightManager.westRed();
+        // line 16 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case SouthGreenAndArrowHigh:
+        // line 20 "model.ump"
+        trafficLightManager.northRed();
+        // line 21 "model.ump"
+        trafficLightManager.southGreenAndArrow();
+        // line 22 "model.ump"
+        trafficLightManager.westRed();
+        // line 23 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case southYellow:
+        // line 27 "model.ump"
+        trafficLightManager.northRed();
+        // line 28 "model.ump"
+        trafficLightManager.southYellow();
+        // line 29 "model.ump"
+        trafficLightManager.westRed();
+        // line 30 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case westGreenAndArrowHigh:
+        // line 34 "model.ump"
+        trafficLightManager.northRed();
+        // line 35 "model.ump"
+        trafficLightManager.southRed();
+        // line 36 "model.ump"
+        trafficLightManager.westGreenAndArrow();
+        // line 37 "model.ump"
+        trafficLightManager.eastRed();
+        break;
+      case westAndEastGreenHigh:
+        // line 41 "model.ump"
+        trafficLightManager.northRed();
+        // line 42 "model.ump"
+        trafficLightManager.southRed();
+        // line 43 "model.ump"
+        trafficLightManager.westGreen();
+        // line 44 "model.ump"
+        trafficLightManager.eastGreen();
+        break;
+      case westAndEastYellowHigh:
+        // line 48 "model.ump"
+        trafficLightManager.northRed();
+        // line 49 "model.ump"
+        trafficLightManager.southRed();
+        // line 50 "model.ump"
+        trafficLightManager.westYellow();
+        // line 51 "model.ump"
         trafficLightManager.eastYellow();
         break;
     }
