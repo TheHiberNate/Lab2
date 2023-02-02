@@ -49,7 +49,7 @@ public class TrafficLight implements EventHandler {
     this.trafficLightManager = trafficLightManager;
     this.trafficCondition = trafficCondidtion;
 
-    if (trafficCondition.equals("lightTraffic")) {
+    if (trafficCondition.equals("lowTraffic")) {
       setStatus(Status.northAndSouthGreenAndArrowLight); // set status to green light for north/south lights
     } else if (trafficCondition.equals("moderateTraffic")) {
       setStatus(Status.northAndLeftArrowGreenMod);
@@ -90,7 +90,7 @@ public class TrafficLight implements EventHandler {
         break;
       default:
         // Other states do respond to this event
-        if (this.trafficCondition.equals("lightTraffic")) {
+        if (this.trafficCondition.equals("lowTraffic")) {
           lowTraffic();
         } else if (this.trafficCondition.equals("moderateTraffic")) {
           moderateTraffic();
@@ -118,7 +118,7 @@ public class TrafficLight implements EventHandler {
         break;
       default:
         // Other states do respond to this event
-        if (this.trafficCondition.equals("lightTraffic")) {
+        if (this.trafficCondition.equals("lowTraffic")) {
           lowTraffic();
         } else if (this.trafficCondition.equals("moderateTraffic")) {
           moderateTraffic();
