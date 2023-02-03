@@ -1,54 +1,47 @@
 class TrafficLight
 {
   status {
-    northGreenAndArrowHigh { 
+    northAndLeftArrowGreenMod { 
         entry / { trafficLightManager.northGreenAndArrow(); }
         entry / { trafficLightManager.southRed(); }
         entry / { trafficLightManager.westRed(); }
         entry / { trafficLightManager.eastRed(); }
-      highTraffic() -> northYellowHigh;
+      moderateTraffic() -> northYellowMod;
     }
-    northYellowHigh {
+    northYellowMod {
         entry / { trafficLightManager.northYellow(); }
         entry / { trafficLightManager.southRed(); }
         entry / { trafficLightManager.westRed(); }
         entry / { trafficLightManager.eastRed(); }
-      highTraffic() -> SouthGreenAndArrowHigh;
+      moderateTraffic() -> northRedMod;
     }
-      SouthGreenAndArrowHigh {
+    northRedMod {
         entry / { trafficLightManager.northRed(); }
         entry / { trafficLightManager.southGreenAndArrow(); }
         entry / { trafficLightManager.westRed(); }
         entry / { trafficLightManager.eastRed(); }
-      highTraffic() -> southYellowHigh;
+      moderateTraffic() -> southYellowMod;
     }
-      southYellowHigh{
+      southYellowMod{
         entry / { trafficLightManager.northRed(); }
         entry / { trafficLightManager.southYellow(); }
         entry / { trafficLightManager.westRed(); }
         entry / { trafficLightManager.eastRed(); }
-      highTraffic() -> westGreenAndArrowHigh;
+      moderateTraffic() -> southRedMod;
     }
-    westGreenAndArrowHigh{
-        entry / { trafficLightManager.northRed(); }
-        entry / { trafficLightManager.southRed(); }
-        entry / { trafficLightManager.westGreenAndArrow(); }
-        entry / { trafficLightManager.eastRed(); }
-      highTraffic() -> westAndEastGreenHigh;
-    }
-    westAndEastGreenHigh{
+    southRedMod{
         entry / { trafficLightManager.northRed(); }
         entry / { trafficLightManager.southRed(); }
         entry / { trafficLightManager.westGreen(); }
         entry / { trafficLightManager.eastGreen(); }
-    highTraffic() -> westAndEastYellowHigh;
+      moderateTraffic() -> westAndEastYellowMod;
     }
-    westAndEastYellowHigh{
+    westAndEastYellowMod{
         entry / { trafficLightManager.northRed(); }
         entry / { trafficLightManager.southRed(); }
         entry / { trafficLightManager.westYellow(); }
         entry / { trafficLightManager.eastYellow(); }
-    highTraffic() -> northGreenAndArrowHigh;
+    moderateTraffic() -> northAndLeftArrowGreenMod;
     }
   }
 }

@@ -25,15 +25,15 @@ public class TrafficLight implements EventHandler {
     // default
     northAndSouthGreen, northAndSouthYellow, northAndSouthRed, westAndEastYellow,
 
-    // lightTraffic
-    northAndSouthGreenAndArrowLight, northAndSouthGreenLight, northAndSouthYellowLight,
+    // lowTraffic
+    northAndSouthArrowLight, northAndSouthGreenLight, northAndSouthYellowLight,
     northAndSouthRedLight, westAndEastYellowLight,
 
     // moderateTraffic
     northAndLeftArrowGreenMod, northYellowMod, northRedMod, southYellowMod, southRedMod, westAndEastYellowMod,
 
     // highTraffic
-    northGreenAndArrowHigh, northYellowHigh, SouthGreenAndArrowHigh, southYellow, westGreenAndArrowHigh,
+    northGreenAndArrowHigh, northYellowHigh, SouthGreenAndArrowHigh, southYellowHigh, westGreenAndArrowHigh,
     westAndEastGreenHigh, westAndEastYellowHigh
   }
 
@@ -50,7 +50,7 @@ public class TrafficLight implements EventHandler {
     this.trafficCondition = trafficCondidtion;
 
     if (trafficCondition.equals("lowTraffic")) {
-      setStatus(Status.northAndSouthGreenAndArrowLight); // set status to green light for north/south lights
+      setStatus(Status.northAndSouthArrowLight); // set status to green light for north/south lights
     } else if (trafficCondition.equals("moderateTraffic")) {
       setStatus(Status.northAndLeftArrowGreenMod);
     } else if (trafficCondition.equals("highTraffic")) {
@@ -173,7 +173,7 @@ public class TrafficLight implements EventHandler {
 
     Status aStatus = status;
     switch (aStatus) {
-      case northAndSouthGreenAndArrowLight:
+      case northAndSouthArrowLight:
         setStatus(Status.northAndSouthGreenLight);
         wasEventProcessed = true;
         break;
@@ -190,7 +190,7 @@ public class TrafficLight implements EventHandler {
         wasEventProcessed = true;
         break;
       case westAndEastYellowLight:
-        setStatus(Status.northAndSouthGreenAndArrowLight);
+        setStatus(Status.northAndSouthArrowLight);
         wasEventProcessed = true;
         break;
       default:
@@ -215,10 +215,10 @@ public class TrafficLight implements EventHandler {
         wasEventProcessed = true;
         break;
       case SouthGreenAndArrowHigh:
-        setStatus(Status.southYellow);
+        setStatus(Status.southYellowHigh);
         wasEventProcessed = true;
         break;
-      case southYellow:
+      case southYellowHigh:
         setStatus(Status.westGreenAndArrowHigh);
         wasEventProcessed = true;
         break;
@@ -288,9 +288,9 @@ public class TrafficLight implements EventHandler {
         trafficLightManager.eastYellow();
         break;
 
-      // light
+      // low
       // case____________________________________________________________________
-      case northAndSouthGreenAndArrowLight:
+      case northAndSouthArrowLight:
         trafficLightManager.northArrow();
         trafficLightManager.southArrow();
         trafficLightManager.westRed();
@@ -416,7 +416,7 @@ public class TrafficLight implements EventHandler {
         // line 23 "model.ump"
         trafficLightManager.eastRed();
         break;
-      case southYellow:
+      case southYellowHigh:
         // line 27 "model.ump"
         trafficLightManager.northRed();
         // line 28 "model.ump"

@@ -1,0 +1,40 @@
+class TrafficLight
+{
+  status {
+    northAndSouthArrowLight { 
+        entry / { trafficLightManager.northArrow(); }
+        entry / { trafficLightManager.southArrow(); }
+        entry / { trafficLightManager.westRed(); }
+        entry / { trafficLightManager.eastRed(); }
+      lowTraffic() -> northAndSouthGreenLight;
+    }
+    northAndSouthGreenLight {
+        entry / { trafficLightManager.northGreen(); }
+        entry / { trafficLightManager.southGreen(); }
+        entry / { trafficLightManager.westRed(); }
+        entry / { trafficLightManager.eastRed(); }
+      lowTraffic() -> northAndSouthYellowLight;
+    }
+      northAndSouthYellowLight {
+        entry / { trafficLightManager.northYellow(); }
+        entry / { trafficLightManager.southYellow(); }
+        entry / { trafficLightManager.westRed(); }
+        entry / { trafficLightManager.eastRed(); }
+      lowTraffic() -> northAndSouthRedLight;
+    }
+      northAndSouthRedLight{
+        entry / { trafficLightManager.northRed(); }
+        entry / { trafficLightManager.southRed(); }
+        entry / { trafficLightManager.westGreen(); }
+        entry / { trafficLightManager.eastGreen(); }
+      lowTraffic() -> westAndEastYellowLight;
+    }
+    westAndEastYellowLight{
+        entry / { trafficLightManager.northRed(); }
+        entry / { trafficLightManager.southRed(); }
+        entry / { trafficLightManager.westYellow; }
+        entry / { trafficLightManager.eastYellow; }
+      lowTraffic() -> northAndSouthArrowLight;
+    }
+  }
+}
