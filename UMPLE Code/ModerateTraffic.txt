@@ -1,4 +1,4 @@
-class TrafficLight
+class TrafficModerate
 {
   status {
     northAndLeftArrowGreenMod { 

@@ -50,13 +50,13 @@ public class TrafficLight implements EventHandler {
     this.trafficCondition = trafficCondidtion;
 
     if (trafficCondition.equals("lowTraffic")) {
-      setStatus(Status.northAndSouthArrowLight); // set status to green light for north/south lights
+      setStatus(Status.northAndSouthArrowLight); // initial state for low traffic
     } else if (trafficCondition.equals("moderateTraffic")) {
-      setStatus(Status.northAndLeftArrowGreenMod);
+      setStatus(Status.northAndLeftArrowGreenMod); // initial state for moderate traffic
     } else if (trafficCondition.equals("highTraffic")) {
-      setStatus(Status.northGreenAndArrowHigh);
+      setStatus(Status.northGreenAndArrowHigh); // initial state for high traffic
     } else {
-      setStatus(Status.northAndSouthGreen);
+      setStatus(Status.northAndSouthGreen); // default system state (no specified traffic)
     }
 
     trafficLightManager.addEventHandler(this);
